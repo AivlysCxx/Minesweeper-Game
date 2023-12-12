@@ -31,6 +31,7 @@ FPS = 60
 title = "Minesweeper Game"
 
 # Import all the tiles from the assets folder
+# Tile type - numbers
 tile_list = []
 filename = "assets"
 for i in range(1, 9):  # since mine number is up to 8
@@ -38,15 +39,21 @@ for i in range(1, 9):  # since mine number is up to 8
     tile_list.append(pygame.transform.scale
                      (pygame.image.load(os.path.join(filename, f"Tile{i}.png")),
                       (tile_size, tile_size)))
+# Tile type - background tile
 tile_blank = (pygame.transform.scale
               (pygame.image.load(os.path.join(filename, "TileEmpty.png")), (tile_size, tile_size)))
+# Tile type - mine that explodes due to missclick
 tile_mine_explode = (pygame.transform.scale
                      (pygame.image.load(os.path.join(filename, "TileExploded.png")), (tile_size, tile_size)))
+# Tile type - user flags the tile indicating a mine under
 tile_flag = (pygame.transform.scale
              (pygame.image.load(os.path.join("assets", "TileFlag.png")), (tile_size, tile_size)))
+# Tile type - mine tile
 tile_mine = (pygame.transform.scale
              (pygame.image.load(os.path.join("assets", "TileMine.png")), (tile_size, tile_size)))
+# Tile type - blank or unclicked tiles
 tile_unknown = (pygame.transform.scale
                 (pygame.image.load(os.path.join("assets", "TileUnknown.png")), (tile_size, tile_size)))
+# Tile type - this means users mis-flags the tile, there's actually no mine under
 tile_mine_wrong = (pygame.transform.scale
                    (pygame.image.load(os.path.join("assets", "TileNotMine.png")), (tile_size, tile_size)))
