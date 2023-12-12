@@ -20,11 +20,32 @@
 - **Timer:** Tracks how long it takes to solve the board.
 
 ## User Interface
-here shows the user interface of our game
+Here shows the user interface of our game
 <p align="center">
   <img src="user_interface_example.jpg" width="350" title="Minesweeper Gameplay">
   <br>
   <em>Figure 1: Minesweeper Gameplay Screenshot</em>
 </p>
+
+### Installation
+
+Clone the GitHub repository:
+
+```bash
+git clone https://github.com/Louiselulul/MineSweeper.git
+```
+
+Install required Python packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Contributors
+
+- [CHEN Xiaojun (AivlysCxx)](https://github.com/AivlysCxx): define game's logic and data structure, such as the tiles placement and game board functionalities 
+- [LU Yuqing (Louiselulul)](https://github.com/Louiselulul): define the game environment, user interaction, and the main game loop
+
+
 
 
