@@ -22,11 +22,11 @@ bg_color = darkgrey
 
 # Game default values setting
 tile_size = 32
-row = 15
-col = 15
+default_row = 15
+default_col = 15
 num_mine = 5
-width = tile_size * row
-height = tile_size * col
+default_width = tile_size * default_row
+default_height = tile_size * default_col
 FPS = 60
 title = "Minesweeper Game"
 
