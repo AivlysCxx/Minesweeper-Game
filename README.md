@@ -27,7 +27,7 @@ Here shows the user interface of our game
   <em>Figure 1: Minesweeper Gameplay Screenshot</em>
 </p>
 
-### Installation
+## Installation
 
 Clone the GitHub repository:
 
@@ -41,10 +41,10 @@ Install required Python packages:
 pip install -r requirements.txt
 ```
 
-### Contributors
+## Contributors
 
-- [CHEN Xiaojun (AivlysCxx)](https://github.com/AivlysCxx): define game's logic and data structure, such as the tiles placement and game board functionalities 
-- [LU Yuqing (Louiselulul)](https://github.com/Louiselulul): define the game environment, user interaction, and the main game loop
+- [CHEN Xiaojun (AivlysCxx)](https://github.com/AivlysCxx): Define game's logic and data structure, such as the tiles placement and game board functionalities. 
+- [LU Yuqing (Louiselulul)](https://github.com/Louiselulul): Define the game environment, user interaction, and the main game loop, such as PygameGame Class.
 
 
 
