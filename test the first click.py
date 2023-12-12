@@ -148,19 +148,21 @@ class GameBoard:
 
 
 ################Yuqing Lu########################################################
+
 class PygameGame:
     """
-    This class represents the main game environment. It is responsible for initializing
-    the game window, handling the game loop, processing user inputs, and rendering the game's graphical components.
+    This class encapsulates the main game environment for a Minesweeper game. It initializes
+    the game window, handles the game loop, processes user inputs, and renders the game's graphical components.
 
     Attributes:
-        settings (Settings): An instance of the Settings class, holding game settings like screen size, title, and FPS.
-        screen (pygame.Surface): The main screen surface where all graphical elements are drawn.
-        clock (pygame.time.Clock): A clock to control the game's frame rate.
-        board (Board): The game board, an instance of the Board class from Sprites.
-        is_playing (bool): A flag to indicate whether the game is currently being played.
-        start_time: count the playing time
-        first_click (bool): A flag to indicate whether the first click happens
+        settings (module): An instance of the Settings module, containing configurations like screen size, title, and FPS.
+        screen (pygame.Surface): The main screen surface for drawing graphical elements of the game.
+        clock (pygame.time.Clock): A clock to regulate the game's frame rate.
+        board (GameBoard): The game board, an instance of the GameBoard class.
+        is_playing (bool): A flag to determine if the game is currently active.
+        start_time (int): Variable to track the start time of the game.
+        first_click (bool): A flag to indicate whether the first click has occurred.
+        won (bool): A flag to indicate whether the player has won the game.
     """
     def __init__(self):
         pygame.init()
@@ -180,8 +182,8 @@ class PygameGame:
 
     def start_new_game(self):
         """
-        Start a new game of Minesweeper. This method resets the game board, displays it,
-        and initializes the game start time.
+        Initializes and starts a new game of Minesweeper.
+        Resets the game board, the start time, and relevant game flags.
         """
         self.board = GameBoard()
         # self.board.show_board()
@@ -189,8 +191,9 @@ class PygameGame:
 
     def game_loop(self):
         """
-        The main game loop. This method keeps the game running, handling events, updating
-        the screen, and rendering the timer until the game ends.
+        The main game loop. Handles the sequence of actions that occur during the game.
+        This includes event handling, screen updating, and timer rendering.
+        Continues until the game ends.
         """
         self.is_playing = True
         while self.is_playing:
@@ -202,11 +205,17 @@ class PygameGame:
             self.show_end_screen()
 
     def update_screen(self):
+        """
+        Updates the game screen. Clears the screen, renders the board, and updates the display.
+        """
         self.screen.fill(self.settings.bg_color)
         self.board.make_board(self.screen)
         pygame.display.flip()
 
     def render_timer(self):
+        """
+        Renders the timer on the game screen. Calculates elapsed time and displays it.
+        """
         elapsed_time = (pygame.time.get_ticks() - self.start_time) // 1000  # Convert milliseconds to seconds
         timer_font = pygame.font.Font(None, 36)  # Choose an appropriate font and size
         timer_surface = timer_font.render(str(elapsed_time), True, self.settings.white)  # Render the time as text
@@ -214,6 +223,13 @@ class PygameGame:
         pygame.display.update()
 
     def check_victory(self):
+        """
+        Checks if the player has won the game.
+        Victory is achieved when all non-mine tiles are revealed.
+
+        Returns:
+            bool: True if the player has won, False otherwise.
+        """
         for row in self.board.board_element:
             for tile in row:
                 # If a non-mine tile is not revealed, return False
@@ -223,6 +239,10 @@ class PygameGame:
         return True
 
     def handle_events(self):
+        """
+        Handles user input events, including mouse clicks and game closure.
+        Processes left and right mouse clicks and checks for game victory.
+        """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.is_playing = False
@@ -243,6 +263,14 @@ class PygameGame:
             self.declare_victory()
 
     def left_click_action(self, x, y):
+        """
+        Handles the action when a left mouse click occurs on the board.
+        If it's the first click, mines are placed. Otherwise, the tile is uncovered.
+
+        Attributes:
+            x (int): The x-coordinate (column) of the clicked tile.
+            y (int): The y-coordinate (row) of the clicked tile.
+        """
         if self.first_click:
             self.board.place_mines_post_first_click(x, y)
             self.first_click = False
@@ -254,11 +282,24 @@ class PygameGame:
                 self.is_playing = False
 
     def right_click_action(self, x, y):
+        """
+        Handles the action when a right mouse click occurs on the board.
+        Toggles a flag on the clicked tile if it is not revealed.
+
+        Attributes:
+            x (int): The x-coordinate (column) of the clicked tile.
+            y (int): The y-coordinate (row) of the clicked tile.
+        """
         tile = self.board.board_element[x][y]
         if not tile.reveal:
             tile.flag = not tile.flag
 
     def explode_mines(self):
+        """
+        Handles the scenario when a mine is clicked.
+        Reveals all mines and marks wrongly flagged tiles.
+        Also sets the game's win status to False.
+        """
         # if exploded, set the status to false
         self.won = False
         for row in self.board.board_element:
@@ -272,6 +313,10 @@ class PygameGame:
                     tile.img = self.settings.tile_mine_wrong
 
     def show_end_screen(self):
+        """
+        Displays the end screen when the game is over.
+        Shows the final game state, a message indicating the outcome, and the total time played.
+        """
         # Calculate total elapsed time
         total_time = (pygame.time.get_ticks() - self.start_time) // 1000  # in seconds
         if self.won:
@@ -299,6 +344,9 @@ class PygameGame:
                     exit()
 
     def declare_victory(self):
+        """
+        Sets the game's playing status to False.
+        """
         self.is_playing = False
 
 
