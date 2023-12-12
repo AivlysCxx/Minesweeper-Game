@@ -2,7 +2,6 @@ import pygame
 import random
 from settings import *
 import settings
-from sprites import *
 
 
 ################Xiaojun Chen########################################################
@@ -309,17 +308,27 @@ class PygameGame:
         Display the end screen when the game is over. This method shows the final state of the
         board and handles the quit event.
         """
+        # Calculate total elapsed time
+        total_time = (pygame.time.get_ticks() - self.start_time) // 1000  # in seconds
         if self.won:
-            print("You Win!")
+            message = "You Win!"
         else:
-            print("Game Over!")
+            message = "Game Over!"
+        print(message + f" Time used: {total_time} seconds")
+        # Render total time on screen
+        font = pygame.font.Font(None, 36)
+        message_surface = font.render(message, True, self.settings.white)
+        time_surface = font.render(f"Time: {total_time} sec", True, self.settings.white)
+
         # Reveal all tiles
         self.explode_mines()
 
-        # Show the final state of the board for 2 minutes
-        end_time = pygame.time.get_ticks() + 120000  # 120000 milliseconds = 2 minutes
+        # Show the final state of the board
+        end_time = pygame.time.get_ticks() + 120000  # 2 minutes
         while pygame.time.get_ticks() < end_time:
             self.update_screen()
+            self.screen.blit(message_surface, (self.settings.default_width // 2, 20))  # Adjust position as needed
+            self.screen.blit(time_surface, (self.settings.default_width // 2, 60))  # Adjust position as needed
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
