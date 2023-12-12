@@ -3,6 +3,7 @@ Sylvia's Code
 """
 from settings import *
 import random
+import pygame
 
 
 # type of tile list
@@ -11,10 +12,10 @@ import random
 class Tile:
     """
     type list:
-        "U" = unknown/unclicked block
+        "." = unknown/unclicked block
         "M" = mine
         "n" = numbers shown on board as clues
-        "." = blank/empty spot
+        "/" = blank/empty spot
     """
 
     def __init__(self, x, y, img, tile_type, reveal=False, flag=False):
@@ -87,7 +88,7 @@ class GameBoard:
             y = random.randint(0, default_col - 1)
 
             if (x, y) not in safe_zone and self.board_element[x][y].tile_type == ".":
-                self.board_element[x][y].tile_type = "X"
+                self.board_element[x][y].tile_type = "M"
                 mines_placed += 1
         self.put_numbers()
 
