@@ -1,3 +1,0 @@
-"""
-Sylvia's Code
-"""
