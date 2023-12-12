@@ -20,7 +20,7 @@
 - **Timer:** Tracks how long it takes to solve the board.
 
 ## User Interface
-here shows the userinterface of our game
+here shows the user interface of our game
 <p align="center">
   <img src="user_interface_example.jpg" width="350" title="Minesweeper Gameplay">
   <br>
