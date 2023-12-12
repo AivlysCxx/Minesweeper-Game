@@ -45,7 +45,7 @@ class GameBoard:
         self.board_surface = pygame.Surface((default_width, default_height))
         self.board_element = [[Tile(c, r, tile_blank, ".")
                                for r in range(default_row)] for c in range(default_col)]
-        self.lay_mine = False
+        self.lay_mine = True
         # self.lay_mine()
         # self.put_numbers()
         self.uncover_history = []
