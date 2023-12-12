@@ -175,6 +175,8 @@ class PygameGame:
         self.is_playing = False
         self.start_time = None
         self.first_click = True
+        # Set win status to True
+        self.won = True
 
     def start_new_game(self):
         """
@@ -290,6 +292,8 @@ class PygameGame:
         Trigger mine explosion. This method is called when a mine is clicked. It reveals all
         mines and marks incorrectly flagged tiles.
         """
+        # if exploded, set the status to false
+        self.won = False
         for row in self.board.board_element:
             for tile in row:
                 if tile.tile_type == "M":
@@ -305,8 +309,12 @@ class PygameGame:
         Display the end screen when the game is over. This method shows the final state of the
         board and handles the quit event.
         """
-        print("Game Over!")
-        self.explode_mines()  # Reveal all tiles
+        if self.won:
+            print("You Win!")
+        else:
+            print("Game Over!")
+        # Reveal all tiles
+        self.explode_mines()
 
         # Show the final state of the board for 2 minutes
         end_time = pygame.time.get_ticks() + 120000  # 120000 milliseconds = 2 minutes
