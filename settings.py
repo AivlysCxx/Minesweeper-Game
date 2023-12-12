@@ -10,21 +10,13 @@ import os
 
 # Color settings
 white = (255, 255, 255)
-black = (0, 0, 0)
-darkgrey = (40, 40, 40)
-lightgrey = (100, 100, 100)
-green = (0, 255, 0)
-darkgreen = (0, 200, 0)
-blue = (0, 0, 255)
-red = (255, 0, 0)
-yellow = (255, 255, 0)
-bg_color = darkgrey
+bg_color = (40, 40, 40)
 
 # Game default values setting
 tile_size = 32
 default_row = 15
 default_col = 15
-num_mine = 5
+num_mine = 40
 default_width = tile_size * default_row
 default_height = tile_size * default_col
 FPS = 60
