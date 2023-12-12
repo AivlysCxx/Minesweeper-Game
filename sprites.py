@@ -13,8 +13,8 @@ class Tile:
     type list:
         "U" = unknown/unclicked block
         "M" = mine
-        "N" = numbers shown on board as clues
-        "B" = blank/empty spot
+        "n" = numbers shown on board as clues
+        "." = blank/empty spot
     """
 
     def __init__(self, x, y, img, tile_type, reveal=False, flag=False):
@@ -47,11 +47,11 @@ class Tile:
 class GameBoard:
     def __init__(self):
         self.board_surface = pygame.Surface((default_width, default_height))
-        self.board_element = [[Tile(c, r, tile_blank, "B")
+        self.board_element = [[Tile(c, r, tile_blank, ".")
                                for r in range(default_row)] for c in range(default_col)]
         self.lay_mine()
         self.put_numbers()
-        self.dig_history = []
+        self.uncover_history = []
 
     def lay_mine(self):
         for _ in range(num_mine):
@@ -60,7 +60,7 @@ class GameBoard:
                 x_val = random.randint(0, default_row - 1)
                 y_val = random.randint(0, default_col - 1)
                 # Change the existing blank tile to mine tile
-                if self.board_element[x_val][y_val].tile_type == "B":
+                if self.board_element[x_val][y_val].tile_type == ".":
                     self.board_element[x_val][y_val].img = tile_mine
                     self.board_element[x_val][y_val].tile_type = "M"
                     break
@@ -73,7 +73,7 @@ class GameBoard:
                     # If we found a block that needs a number in it
                     if mine_count > 0:
                         self.board_element[x][y].img = tile_list[mine_count-1]
-                        self.board_element[x][y].tile_type = "N"
+                        self.board_element[x][y].tile_type = "n"
 
     def place_mines_post_first_click(self, first_click_x, first_click_y):
         # Define the safe zone around the first click
@@ -120,25 +120,25 @@ class GameBoard:
                 tile.make_board(self.board_surface)
         screen.blit(self.board_surface, (0, 0))  # top left corner of the screen
 
-    def dig(self, x, y):
-        self.dig_history.append((x, y))
-        # If we dig and hit a mine, mine explodes
+    def uncover(self, x, y):
+        self.uncover_history.append((x, y))
+        # If we uncover and hit a mine, mine explodes
         if self.board_element[x][y].tile_type == "M":
             self.board_element[x][y].reveal = True
             self.board_element[x][y].img = tile_mine_explode
             return False
-        # If we dig and hit a number
-        elif self.board_element[x][y].tile_type == "N":
+        # If we uncover and hit a number
+        elif self.board_element[x][y].tile_type == "n":
             self.board_element[x][y].reveal = True
             return True
         self.board_element[x][y].reveal = True
-        # Recursively run this loop when we dig and hit a blank tile
+        # Recursively run this loop when we uncover and hit a blank tile
         # This loop will stop when it finds a number
         for r in range(max(0, x-1), min(default_row-1, x+1)+1):
             for c in range(max(0, y - 1), min(default_col - 1, y+1)+1):
                 # check if the coordinate is already explored
-                if (r,c) not in self.dig_history:
-                    self.dig(r, c)
+                if (r, c) not in self.uncover_history:
+                    self.uncover(r, c)
         return True
 
 
