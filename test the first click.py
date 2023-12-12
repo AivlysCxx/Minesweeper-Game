@@ -184,7 +184,7 @@ class PygameGame:
         and initializes the game start time.
         """
         self.board = GameBoard()
-        self.board.show_board()
+        # self.board.show_board()
         self.start_time = pygame.time.get_ticks()
 
     def game_loop(self):
@@ -247,6 +247,7 @@ class PygameGame:
             self.board.place_mines_post_first_click(x, y)
             self.first_click = False
             self.board.lay_mine = True
+            self.board.show_board()
         if not self.board.board_element[x][y].flag:
             if not self.board.uncover(x, y):
                 self.explode_mines()
