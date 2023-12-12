@@ -22,7 +22,6 @@
 ## User Interface
 here shows the userinterface of our game
 <p align="center">
-  <img src="<p align="center">
   <img src="user_interface_example.jpg" width="350" title="Minesweeper Gameplay">
   <br>
   <em>Figure 1: Minesweeper Gameplay Screenshot</em>
