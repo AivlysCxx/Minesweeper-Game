@@ -1,7 +1,7 @@
 """
 This code is for game settings.
-1. Color setting
-2. Game default values setting
+1. Color settings
+2. Game default values settings
 3. Import tiles
 """
 
