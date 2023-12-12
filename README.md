@@ -13,10 +13,13 @@
 
 
 ## Features
-- **Customizable Grid Size:** Choose your preferred board size.
-- **Variable Mine Count:** Set the number of mines.
 - **Safe First Click:** Ensures the first cell clicked is never a mine.
 - **Recursive Uncovering:** Automatically uncovers adjacent cells when a safe cell is revealed.
 - **Flagging Capability:** Players can flag cells they suspect contain mines.
 - **Console-Based Interface:** Easy-to-use text interface for game interaction.
 - **Timer:** Tracks how long it takes to solve the board.
+
+## screenshot
+here shows the userinterface of our game
+
+
