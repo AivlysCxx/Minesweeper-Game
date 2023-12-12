@@ -16,7 +16,7 @@
 - **Safe First Click:** Ensures the first cell clicked is never a mine.
 - **Recursive Uncovering:** Automatically uncovers adjacent cells when a safe cell is revealed.
 - **Flagging Capability:** Players can flag cells they suspect contain mines.
-- **Console-Based Interface:** Easy-to-use text interface for game interaction.
+- **Console-Based Interface:** Easy-to-use interface for game interaction.
 - **Timer:** Tracks how long it takes to solve the board.
 
 ## User Interface
