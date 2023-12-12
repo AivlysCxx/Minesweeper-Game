@@ -13,7 +13,6 @@ class Tile:
         "n" = numbers shown on board as clues
         "." = blank/empty spot
     """
-
     def __init__(self, x, y, img, tile_type, reveal=False, flag=False):
         self.x = x * tile_size
         self.y = y * tile_size
@@ -46,8 +45,9 @@ class GameBoard:
         self.board_surface = pygame.Surface((default_width, default_height))
         self.board_element = [[Tile(c, r, tile_blank, ".")
                                for r in range(default_row)] for c in range(default_col)]
-        self.lay_mine()
-        self.put_numbers()
+        self.lay_mine = False
+        # self.lay_mine()
+        # self.put_numbers()
         self.uncover_history = []
 
     def lay_mine(self):
@@ -84,7 +84,8 @@ class GameBoard:
             y = random.randint(0, default_col - 1)
 
             if (x, y) not in safe_zone and self.board_element[x][y].tile_type == ".":
-                self.board_element[x][y].tile_type = "X"
+                self.board_element[x][y].tile_type = "M"  # Change "X" to "M" to indicate mine
+                self.board_element[x][y].img = tile_mine  # Assign the mine image
                 mines_placed += 1
         self.put_numbers()
 
@@ -112,10 +113,11 @@ class GameBoard:
         return mine_count
 
     def make_board(self, screen):
-        for r in self.board_element:
-            for tile in r:
-                tile.make_board(self.board_surface)
-        screen.blit(self.board_surface, (0, 0))  # top left corner of the screen
+        if self.lay_mine:  # Only generate the board if mines are laid
+            for r in self.board_element:
+                for tile in r:
+                    tile.make_board(self.board_surface)
+            screen.blit(self.board_surface, (0, 0))
 
     def uncover(self, x, y):
         self.uncover_history.append((x, y))
@@ -155,7 +157,6 @@ class PygameGame:
         settings (Settings): An instance of the Settings class, holding game settings like screen size, title, and FPS.
         screen (pygame.Surface): The main screen surface where all graphical elements are drawn.
         clock (pygame.time.Clock): A clock to control the game's frame rate.
-        sprites (Sprites): An instance of the Sprites class, used to manage game sprites.
         board (Board): The game board, an instance of the Board class from Sprites.
         is_playing (bool): A flag to indicate whether the game is currently being played.
         start_time: count the playing time
@@ -201,19 +202,11 @@ class PygameGame:
             self.show_end_screen()
 
     def update_screen(self):
-        """
-        Update the game screen. This method fills the screen with a background color,
-        draws the game board, and updates the display.
-        """
         self.screen.fill(self.settings.bg_color)
         self.board.make_board(self.screen)
         pygame.display.flip()
 
     def render_timer(self):
-        """
-        Render the game timer. This method calculates the elapsed time since the game started
-        and displays it on the screen.
-        """
         elapsed_time = (pygame.time.get_ticks() - self.start_time) // 1000  # Convert milliseconds to seconds
         timer_font = pygame.font.Font(None, 36)  # Choose an appropriate font and size
         timer_surface = timer_font.render(str(elapsed_time), True, self.settings.white)  # Render the time as text
@@ -221,11 +214,6 @@ class PygameGame:
         pygame.display.update()
 
     def check_victory(self):
-        """
-        Check if the player has won the game. The player wins if all non-mine tiles are revealed.
-        Returns:
-            bool: True if the player has won, False otherwise.
-        """
         for row in self.board.board_element:
             for tile in row:
                 # If a non-mine tile is not revealed, return False
@@ -235,10 +223,6 @@ class PygameGame:
         return True
 
     def handle_events(self):
-        """
-        Handle game events. This method processes player inputs and game events such as mouse
-        clicks and quitting the game. It also checks for victory conditions.
-        """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.is_playing = False
@@ -259,38 +243,21 @@ class PygameGame:
             self.declare_victory()
 
     def left_click_action(self, x, y):
-        """
-        Handle left-click actions by the player. The first left-click triggers mine placement,
-        and subsequent clicks uncover tiles.
-        parameters:
-            x (int): The x-coordinate of the clicked tile.
-            y (int): The y-coordinate of the clicked tile.
-        """
         if self.first_click:
             self.board.place_mines_post_first_click(x, y)
             self.first_click = False
-
+            self.board.lay_mine = True
         if not self.board.board_element[x][y].flag:
             if not self.board.uncover(x, y):
                 self.explode_mines()
                 self.is_playing = False
 
     def right_click_action(self, x, y):
-        """
-        Handle right-click actions by the player. Right-clicking toggles flags on unopened tiles.
-        parameters:
-            x (int): The x-coordinate of the clicked tile.
-            y (int): The y-coordinate of the clicked tile.
-        """
         tile = self.board.board_element[x][y]
         if not tile.reveal:
             tile.flag = not tile.flag
 
     def explode_mines(self):
-        """
-        Trigger mine explosion. This method is called when a mine is clicked. It reveals all
-        mines and marks incorrectly flagged tiles.
-        """
         # if exploded, set the status to false
         self.won = False
         for row in self.board.board_element:
@@ -304,10 +271,6 @@ class PygameGame:
                     tile.img = self.settings.tile_mine_wrong
 
     def show_end_screen(self):
-        """
-        Display the end screen when the game is over. This method shows the final state of the
-        board and handles the quit event.
-        """
         # Calculate total elapsed time
         total_time = (pygame.time.get_ticks() - self.start_time) // 1000  # in seconds
         if self.won:
@@ -335,10 +298,6 @@ class PygameGame:
                     exit()
 
     def declare_victory(self):
-        """
-        Declare victory for the player. This method stops the game loop and triggers
-        the victory sequence.
-        """
         self.is_playing = False
 
 
