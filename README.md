@@ -21,5 +21,14 @@
 
 ## screenshot
 here shows the userinterface of our game
+<p align="center">
+  <img src="<p align="center">
+  <img src="https://github.com/yourusername/yourrepository/blob/main/images/minesweeper_screenshot.png" width="350" title="Minesweeper Gameplay">
+  <br>
+  <em>Figure 1: Minesweeper Gameplay Screenshot</em>
+</p>" width="350" title="Minesweeper Gameplay">
+  <br>
+  <em>Figure 1: Minesweeper Gameplay Screenshot</em>
+</p>
 
 
