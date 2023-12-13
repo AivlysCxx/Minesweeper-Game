@@ -19,9 +19,18 @@
 - **Timer:** Tracks how long it takes to solve the board.
 
 ## Types of cell/tile:
-1. Number/clue tile:![Tile1](https://github.com/Louiselulul/MineSweeper/assets/109748663/31da1ab4-58c7-420d-8afa-a8cba33a0510)
+1. Number/clue:![Tile1](https://github.com/Louiselulul/MineSweeper/assets/109748663/31da1ab4-58c7-420d-8afa-a8cba33a0510)
+2. Mine: ![TileMine](https://github.com/Louiselulul/MineSweeper/assets/109748663/7af0097c-4199-4184-8f60-4d65edcbedf6)
+4. Flag: ![TileFlag](https://github.com/Louiselulul/MineSweeper/assets/109748663/8f647b85-3005-4507-a506-a3105ccb6f35)
+5. If player hits a mine, it explodes: ![TileExploded](https://github.com/Louiselulul/MineSweeper/assets/109748663/96e3aa61-cbe2-45be-961d-3c058b67c4cd)
+6. If player mis-placed a flag, this will show up when player hits a mine and ends the game: ![TileNotMine](https://github.com/Louiselulul/MineSweeper/assets/109748663/2cb1dbee-f106-43f1-b18e-c34a61678816)
+7. Unknown/un-clicked tile:![TileUnknown](https://github.com/Louiselulul/MineSweeper/assets/109748663/b5fe1cf0-413c-4c7d-848f-8a3115578f0a)
+8. Blank/background tile: ![TileEmpty](https://github.com/Louiselulul/MineSweeper/assets/109748663/b1523f2a-4e9f-49ee-83e1-4c4febb22fc1)
 
-2. 
+
+
+
+
 
 ## User Interface
 Here shows the user interface of our game
