@@ -57,7 +57,7 @@ pip install -r requirements.txt
 
 ## Pygame Installation Issue Solution
 NOTE: This game requires pygame module.
-Note that python version greater than 3.10 (e.g 3.11) is incompatible with pygame module. If you encounter an error message saying installation failure, this might be due to your python version. You can try the following steps (This works if you downloaded pycharm through anaconda):
+Note that python version greater than 3.10 (e.g 3.11) is incompatible with pygame module auto-installation within pycharm. If you encounter an error message saying installation failure, this might be due to your python version. You can try the following steps (This works if you downloaded pycharm through anaconda):
 
 First, check your interpreter version:
 - Open pycharm --> File --> Settings --> Project: --> Python interpreter
@@ -68,8 +68,8 @@ Now, you may see your python version directly next to "python interpreter". Howe
 - To exist, type "quit()"
 
 Now, if you see that you have python 3.11, then the installation error is probably because of it. You can try 2 things:
-1. Click the down-arrow next to python interpreter, if you have project that used older python version on your computer, you should see other interpreters showing earlier python version. You can directly choose them, and now your currently project's interpreter will be changed, now try installing pygame again.
-2. Open Anaconda Prompt, type "pip install pygame" to install pygame, type "pip show pygame" to verify installation.
+1. [Directly download pygame without changing your python vesrion] Open Anaconda Prompt, type "pip install pygame" to install pygame, type "pip show pygame" to verify installation.
+2. [Changing your current python version to older ones]Click the down-arrow next to python interpreter, if you have project that used older python version on your computer, you should see other interpreters showing earlier python version. You can directly choose them, and now your currently project's interpreter will be changed, now try installing pygame again.
    
 ## Contributors
 
