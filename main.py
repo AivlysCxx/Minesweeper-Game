@@ -1,19 +1,48 @@
+"""
+Software Carpentry EN.540.635.01
+Final Project - Minesweeper Game
+Dec. 2023
+
+Contributors:
+Yuqing Lu (Louise)
+Xiaojun Chen (Sylvia)
+
+Please refer to the README file for more info.
+"""
 import pygame
 import random
 from settings import *
 import settings
 
-
 ################Xiaojun Chen########################################################
 class Tile:
     """
-    type list:
-        "U" = unknown/unclicked block
+    This class is a wrapper for defining tiles in this game.
+    Tile type list:
+        "." = unknown/un-clicked block
         "M" = mine
         "n" = numbers shown on board as clues
-        "." = blank/empty spot
+        "/" = blank/empty spot (not used)
     """
+
     def __init__(self, x, y, img, tile_type, reveal=False, flag=False):
+        """
+        Tile initialization.
+
+        **Parameters**
+            x: *int*
+                x coordinate of the tile
+            y: *int*
+                y coordinate of the tile
+            img: *pygame.Surface*
+                The tile image
+            title_type: *str*
+                Type of the tile
+            reveal: *bool*
+                Whether the tile is revealed, default to False
+            flag: *bool*
+                Whether the tile is flagged, default to False
+        """
         self.x = x * tile_size
         self.y = y * tile_size
         self.img = img
@@ -22,6 +51,13 @@ class Tile:
         self.flag = flag
 
     def make_board(self, board_surface):
+        """
+        Draws tiles on the given board surface.
+
+        **Parameters**
+            board_surface: *pygame.Surface*
+                The surface of board on which to draw the tiles.
+        """
         # We put either a mine or number on a revealed (clicked) tile
         # We also make sure that this tile has no flag
         if not self.flag and self.reveal:
@@ -35,13 +71,36 @@ class Tile:
 
     def __repr__(self):
         """
-        This can print the board in console
+        This can print the board in console as a string
+
+        **Returns**
+            *str*
+                The string representation of board including tile types
         """
         return self.tile_type
 
 
 class GameBoard:
+    """
+    This class is a wrapper for the Minesweeper game board.
+    This class manages the tiles on the board, including their initial setup,
+    placement of mines, and revealing tiles during gameplay.
+
+    **Attributes**
+        board_surface:*pygame.Surface*
+            The surface on which the board elements/tiles are drawn
+        board_element: *list[list[Tile]]*
+            A 2D array of tile objects representing the game board
+        lay_mine: *bool*
+            Indication of whether mines have been laid on the board
+        uncover_history: *list[tuple]*
+            A list to keep track of uncovered tiles to prevent redundant operations
+    """
+
     def __init__(self):
+        """
+        Initialization of the GameBoard
+        """
         self.board_surface = pygame.Surface((default_width, default_height))
         self.board_element = [[Tile(c, r, tile_blank, ".")
                                for r in range(default_row)] for c in range(default_col)]
@@ -51,6 +110,10 @@ class GameBoard:
         self.uncover_history = []
 
     def lay_mine(self):
+        """
+        Randomly places a predetermined number of mines on the board.
+        This also ensures that each mine is placed on a unique tile.
+        """
         for _ in range(num_mine):
             while True:
                 # Generate a random location for laying mines
@@ -63,16 +126,30 @@ class GameBoard:
                     break
 
     def put_numbers(self):
+        """
+        Assigns numbers to tiles based on the number of adjacent mines.
+        This method is called after mines have been placed on the board.
+        """
         for x in range(default_row):
             for y in range(default_col):
                 if self.board_element[x][y].tile_type != "M":
                     mine_count = self.check_neighbors(x, y)
                     # If we found a block that needs a number in it
                     if mine_count > 0:
-                        self.board_element[x][y].img = tile_list[mine_count-1]
+                        self.board_element[x][y].img = tile_list[mine_count - 1]
                         self.board_element[x][y].tile_type = "n"
 
     def place_mines_post_first_click(self, first_click_x, first_click_y):
+        """
+        Places mines on the board after the first click.
+        This ensures that the first click we don't hit a mine.
+
+        **Parameters**
+            first_click_x: *int*
+                x coordinate of the first click
+            first_click_y: *int*
+                y coordinate of the first click
+        """
         # Define the safe zone around the first click
         safe_zone = [(x, y) for x in range(first_click_x - 1, first_click_x + 2)
                      for y in range(first_click_y - 1, first_click_y + 2)
@@ -93,11 +170,34 @@ class GameBoard:
     def boundary_check(x, y):
         """
         This is to check if we're inside the boards' boundary.
+
+        **Parameters**
+            x: *int*
+                The x coordinate to check
+            y: *int*
+                The y coordinate to check
+
+        **Returns**
+            check: *bool*
+                True if within the boundary, False otherwise
         """
         check = 0 <= x < default_row and 0 <= y < default_col
         return check
 
     def check_neighbors(self, x, y):
+        """
+        Counts the number of neighboring mines adjacent to our tile of interest.
+
+        **Parameters**
+            x: *int*
+                x coordinate of the tile
+            y: *int*
+                y coordinate of the tile
+
+        **Returns**
+            mine_count: *int*
+                The number of neighboring mines
+        """
         mine_count = 0
         # coordinates of the neighbors around our tile of interest
         # starting from top left of it which is (-1,-1)
@@ -113,6 +213,15 @@ class GameBoard:
         return mine_count
 
     def make_board(self, screen):
+        """
+        Draws the current state of the game board on the given screen.
+        This is responsible for displaying each tiles' current state, whether it's
+        a revealed mine, a number, a flag, or an unrevealed tile.
+
+        **Parameters**
+            screen: *pygame.Surface*
+                The surface onto which the board is drawn
+        """
         if self.lay_mine:  # Only generate the board if mines are laid
             for r in self.board_element:
                 for tile in r:
@@ -120,6 +229,23 @@ class GameBoard:
             screen.blit(self.board_surface, (0, 0))
 
     def uncover(self, x, y):
+        """
+        Uncovers a tile at the specific coordinates and performs actions based on the type pf tile.
+        If the tile is a mine, explodes.
+        If the tile is a number, reveals itself.
+        If the tile is a blank tile, it triggers a recursive uncovering of adjacent tiles.
+
+        **Parameters**
+            x: *int*
+                x coordinate of the tile to uncover
+            y: *int*
+                y coordinate of the tile to uncover
+
+        **Returns**
+            *bool*
+                True if the uncover action is successful and safe
+                False if a mine is uncovered
+        """
         self.uncover_history.append((x, y))
         # If we uncover and hit a mine, mine explodes
         if self.board_element[x][y].tile_type == "M":
@@ -133,19 +259,20 @@ class GameBoard:
         self.board_element[x][y].reveal = True
         # Recursively run this loop when we uncover and hit a blank tile
         # This loop will stop when it finds a number
-        for r in range(max(0, x-1), min(default_row-1, x+1)+1):
-            for c in range(max(0, y - 1), min(default_col - 1, y+1)+1):
+        for r in range(max(0, x - 1), min(default_row - 1, x + 1) + 1):
+            for c in range(max(0, y - 1), min(default_col - 1, y + 1) + 1):
                 # check if the coordinate is already explored
                 if (r, c) not in self.uncover_history:
                     self.uncover(r, c)
         return True
 
-
     def show_board(self):
+        """
+        Prints the current state of the board to the console.
+        Useful for debugging.
+        """
         for r in self.board_element:
             print(r)
-
-
 
 ################Yuqing Lu########################################################
 
@@ -164,6 +291,7 @@ class PygameGame:
         first_click (bool): A flag to indicate whether the first click has occurred.
         won (bool): A flag to indicate whether the player has won the game.
     """
+
     def __init__(self):
         pygame.init()
         self.settings = settings
