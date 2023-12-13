@@ -38,7 +38,7 @@ Here shows the user interface of our game
 When player wins:
 ![wub](https://github.com/Louiselulul/MineSweeper/assets/109748663/9648c821-9b46-4829-b2ac-7e4ef83163a9)
 
-When player lose:
+When player loses:
 ![lose](https://github.com/Louiselulul/MineSweeper/assets/109748663/7883a577-6525-4fe7-96df-74dac524eb39)
 
 ## Installation
@@ -68,7 +68,7 @@ Now, you may see your python version directly next to "python interpreter". Howe
 - To exist, type "quit()"
 
 Now, if you see that you have python 3.11, then the installation error is probably because of it. You can try 2 things:
-1. [Directly download pygame without changing your python vesrion] Open Anaconda Prompt, type "pip install pygame" to install pygame, type "pip show pygame" to verify installation.
+1. [Directly download pygame without changing your python vesrion] Open Anaconda Prompt, type ```bash pip install pygame ``` to install pygame, type "pip show pygame" to verify installation.
 2. [Changing your current python version to older ones]Click the down-arrow next to python interpreter, if you have project that used older python version on your computer, you should see other interpreters showing earlier python version. You can directly choose them, and now your currently project's interpreter will be changed, now try installing pygame again.
    
 ## Contributors
