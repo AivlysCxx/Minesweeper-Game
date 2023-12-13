@@ -63,12 +63,12 @@ First, check your interpreter version:
 - Open pycharm --> File --> Settings --> Project: --> Python interpreter
 
 Now, you may see your python version directly next to "python interpreter". However, if it says "anaconda3" and you don't see your python version:
-- Open Andaconda Prompt, type the command "python".
-- Optional: to get a list of all installed packages and verify their version, type "conda list"
-- To exist, type "quit()"
+- Open Andaconda Prompt, type the command ```python```.
+- Optional: to get a list of all installed packages and verify their version, type ```conda list```
+- To exist, type ```quit()```
 
 Now, if you see that you have python 3.11, then the installation error is probably because of it. You can try 2 things:
-1. [Directly download pygame without changing your python vesrion] Open Anaconda Prompt, type ```bash pip install pygame ``` to install pygame, type "pip show pygame" to verify installation.
+1. [Directly download pygame without changing your python vesrion] Open Anaconda Prompt, type ```pip install pygame``` to install pygame, type ```pip show pygame``` to verify installation.
 2. [Changing your current python version to older ones]Click the down-arrow next to python interpreter, if you have project that used older python version on your computer, you should see other interpreters showing earlier python version. You can directly choose them, and now your currently project's interpreter will be changed, now try installing pygame again.
    
 ## Contributors
