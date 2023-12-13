@@ -35,6 +35,12 @@ Here shows the user interface of our game
   <em>Figure 1: Minesweeper Gameplay Screenshot</em>
 </p>
 
+When player wins:
+![wub](https://github.com/Louiselulul/MineSweeper/assets/109748663/9648c821-9b46-4829-b2ac-7e4ef83163a9)
+
+When player lose:
+![lose](https://github.com/Louiselulul/MineSweeper/assets/109748663/7883a577-6525-4fe7-96df-74dac524eb39)
+
 ## Installation
 
 Clone the GitHub repository:
