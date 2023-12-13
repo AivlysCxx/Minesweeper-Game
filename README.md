@@ -27,11 +27,6 @@
 7. Unknown/un-clicked tile:![TileUnknown](https://github.com/Louiselulul/MineSweeper/assets/109748663/b5fe1cf0-413c-4c7d-848f-8a3115578f0a)
 8. Blank/background tile: ![TileEmpty](https://github.com/Louiselulul/MineSweeper/assets/109748663/b1523f2a-4e9f-49ee-83e1-4c4febb22fc1)
 
-
-
-
-
-
 ## User Interface
 Here shows the user interface of our game
 <p align="center">
@@ -54,6 +49,22 @@ Install required Python packages:
 pip install -r requirements.txt
 ```
 
+## Pygame Installation Issue Solution
+NOTE: This game requires pygame module.
+Note that python version greater than 3.10 (e.g 3.11) is incompatible with pygame module. If you encounter an error message saying installation failure, this might be due to your python version. You can try the following steps (This works if you downloaded pycharm through anaconda):
+
+First, check your interpreter version:
+- Open pycharm --> File --> Settings --> Project: --> Python interpreter
+
+Now, you may see your python version directly next to "python interpreter". However, if it says "anaconda3" and you don't see your python version:
+- Open Andaconda Prompt, type the command "python".
+- Optional: to get a list of all installed packages and verify their version, type "conda list"
+- To exist, type "quit()"
+
+Now, if you see that you have python 3.11, then the installation error is probably because of it. You can try 2 things:
+1. Click the down-arrow next to python interpreter, if you have project that used older python version on your computer, you should see other interpreters showing earlier python version. You can directly choose them, and now your currently project's interpreter will be changed, now try installing pygame again.
+2. Open Anaconda Prompt, type "pip install pygame" to install pygame, type "pip show pygame" to verify installation.
+   
 ## Contributors
 
 - [CHEN Xiaojun (AivlysCxx)](https://github.com/AivlysCxx): Define game's logic and data structure, such as the tiles placement and game board functionalities. 
